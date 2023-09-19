@@ -1,0 +1,23 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        { //this is usually the default setting
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        { //this is our setting for using debugpy
+            "name": "Python: Attach",
+            "type": "python",
+            "request": "attach",
+            "connect": {
+                "host": "127.0.0.1",
+                "port": 6679
+            },
+            "justMyCode": false 
+        }
+    ]
+}
