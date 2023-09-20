@@ -55,3 +55,15 @@ and receives only minimal performance degradation on standard benchmarks
 ![standard](imgs/standard.png)
 
 ## Citation
+If you find this repo helpful, please cite our paper as follows:
+
+```bibtex
+@misc{zhu2023pose,
+      title={PoSE: Efficient Context Window Extension of LLMs via Positional Skip-wise Training}, 
+      author={Dawei Zhu and Nan Yang and Liang Wang and Yifan Song and Wenhao Wu and Furu Wei and Sujian Li},
+      year={2023},
+      eprint={2309.10400},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL}
+}
+```
