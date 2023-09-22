@@ -13,7 +13,8 @@ Notably, by decoupling fine-tuning length from target context window, PoSE can t
 
 ## 🔥 What's New
 
-* **[2023/09/19]** Our [paper](paper/PoSE-v1.pdf) and code is released.
+* **[2023/09/22]** Results of PoSE on Baichuan2 is included. We further consolidate the effectiveness of our method.
+* **[2023/09/19]** Our [paper](https://arxiv.org/abs/2309.10400) and code is released.
 
 ## 🔧 Reproduction
 To replicate our results, follow these steps to download the code and necessary dependencies:
@@ -25,7 +26,7 @@ pip install -r requirements.txt
 Additionally, as we utilize [lm-eval-harness](https://github.com/EleutherAI/lm-evaluation-harness) for evaluation on standard benchmarks, please install lm-eval-harness under the `helper/` folder.
 
 ### Data, Models and Computation Resources
-We have conducted experiments with Llama-7B, Llama2-7B, and GPT-J-6B. Ongoing experiments are focusing on consolidating the effectiveness of PoSE on BaiChuan2.
+We have conducted experiments with Llama-7B, Llama2-7B, and GPT-J-6B, Baichuan2-7B.
 
 All the models are fine-tuned on The Pile dataset. Since this dataset is randomly shuffled, we use only the 00 split for training. We further filter short inputs and keep 10w samples for fine-tuning, which has proven sufficient for our method.
 
