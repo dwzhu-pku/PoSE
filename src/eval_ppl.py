@@ -125,7 +125,6 @@ def main():
     parser.add_argument("--path_to_output_dir", type=str, default="results/ppls")
     args = parser.parse_args()
 
-    # model_name_or_path = "/home/v-daweizhu/teamdrive/skipos/results/2k-32k-v5/checkpoint-500"
     model_name_or_path = args.path_to_ckp
 
     Config, CausalLM, Tokenizer = None, None, None
