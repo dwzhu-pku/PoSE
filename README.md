@@ -37,9 +37,21 @@ In terms of computation resources, all our training is conducted on 8 * 32G V100
 
 The scripts under `script/` comprehensively cover the commands for training and evaluation.
 
-For training, the key modifications revolve around position indices of the input text. You can refer to the `train_preprocess_function_pose` function to understand our proposed method. There are also minor revisions in `my_modeling_xxx.py` and `my-configuration_xxx.py` for implementing linear / NTK / YaRN interpolations and for utilizing xformers for efficient training & inference. Note that we use the revised version of YaRN in our experiments, as supported by the issue [inv_freq seems not calculated right](https://github.com/jquesnelle/yarn/issues/24).
+For training, the key modifications revolve around position indices of the input text. You can refer to the `train_preprocess_function_pose` function to understand our proposed method. There are also minor revisions in `my_modeling_xxx.py` and `my-configuration_xxx.py` for implementing linear / NTK / YaRN interpolations and for utilizing xformers for efficient training & inference. Note that we use the revised version of YaRN in our experiments, as supported by the issue [inv_freq seems not calculated right](https://github.com/jquesnelle/yarn/issues/24). For example, You can start training Llama for context extension from 2k to 128k (64x) with YaRN interpolation by running comments as follows:
 
-For evaluation, we made no revisions to position indices, so the process remains the same as the common setting.
+```bash
+cd PoSE
+bash script/run_train_skipos.sh 64 yarn
+```
+
+For evaluation, we made no revisions to position indices, so the process remains the same as the common setting. You can run following comments for the evaluation of passkey retrieval / ppl / standard benchmarks:
+
+```bash
+cd PoSE
+bash script/run_eval_passkey.sh # for passkey retrieval
+bash script/run_eval_ppl.sh # for ppl
+bash script/run_lm_eval.sh # for standard benchmarks
+```
 
 ## 📈 Experiment Results
 Empirically, we demonstrate that PoSE achieves significant memory and time efficiency:

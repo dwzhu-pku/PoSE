@@ -1,6 +1,5 @@
-flag=$1
-factor=$2
-rope_type=$3
+factor=$1
+rope_type=$2
 
 prefix=path_to_your_model_and_data
 
