@@ -134,27 +134,6 @@ class DataCollatorForSupervisedDataset(object):
             attention_mask=input_ids.ne(self.tokenizer.pad_token_id),
         )
 
-
-def train_preprocess_function(examples, tokenizer, scaled_max_position_embeddings, model_max_position_embeddings):
-
-    inputs = examples["text"]
-    model_inputs = tokenizer(inputs, padding=False, truncation=True, max_length=model_max_position_embeddings)
-    position_ids = [torch.arange(len(ids), dtype=torch.long) for ids in model_inputs["input_ids"]]
-
-    for pos_ids in position_ids:
-        len_pos_ids = len(pos_ids)
-    
-        lt = random.randint(0, scaled_max_position_embeddings-len_pos_ids)
-        rt = random.randint(lt, scaled_max_position_embeddings-len_pos_ids)
-
-        pos_ids[:len(pos_ids)//2] += lt
-        pos_ids[len(pos_ids)//2:] += rt
-
-    model_inputs["position_ids"] = position_ids
-    model_inputs["labels"] = model_inputs["input_ids"]
-
-    return model_inputs
-
 def train_preprocess_function_randomized(examples, tokenizer, scaled_max_position_embeddings, model_max_position_embeddings):
 
     inputs = examples["text"]
@@ -195,7 +174,8 @@ def train_preprocess_function_pose(examples, tokenizer, scaled_max_position_embe
 
         pos_ids = torch.arange(len(chunked_ids), dtype=torch.long)
         len_pos_ids = len(pos_ids)
-        lt = random.randint(0, scaled_max_position_embeddings-len_pos_ids)
+        # lt = random.randint(0, scaled_max_position_embeddings-len_pos_ids)
+        lt = 0 # this revision makes the coverage possiblity more uniform for large relative positions
         rt = random.randint(lt, scaled_max_position_embeddings-len_pos_ids)
 
         pos_ids[:rt1-lt1] += lt
@@ -206,7 +186,7 @@ def train_preprocess_function_pose(examples, tokenizer, scaled_max_position_embe
 
     return model_inputs
 
-def train_preprocess_function_interpolate(examples, tokenizer, scaled_max_position_embeddings, model_max_position_embeddings):
+def train_preprocess_function_pi(examples, tokenizer, scaled_max_position_embeddings, model_max_position_embeddings):
 
     inputs = examples["text"]
     model_inputs = tokenizer(inputs, padding=False, truncation=True, max_length=scaled_max_position_embeddings)

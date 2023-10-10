@@ -157,7 +157,8 @@ def train_preprocess_function_pose(examples, tokenizer, scaled_max_position_embe
 
         pos_ids = torch.arange(len(chunked_ids), dtype=torch.long)
         len_pos_ids = len(pos_ids)
-        lt = random.randint(0, scaled_max_position_embeddings-len_pos_ids)
+        # lt = random.randint(0, scaled_max_position_embeddings-len_pos_ids)
+        lt = 0
         rt = random.randint(lt, scaled_max_position_embeddings-len_pos_ids)
 
         pos_ids[:rt1-lt1] += lt

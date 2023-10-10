@@ -152,38 +152,6 @@ class LlamaLinearScalingRotaryEmbedding(LlamaRotaryEmbedding):
         self.register_buffer("cos_cached", emb.cos()[None, None, :, :].to(dtype), persistent=False)
         self.register_buffer("sin_cached", emb.sin()[None, None, :, :].to(dtype), persistent=False)
 
-class LlamaSmartLinearScalingRotaryEmbedding(LlamaRotaryEmbedding):
-
-    def __init__(self, dim, max_position_embeddings=2048, base=10000, device=None, scaling_factor=1.0):
-        self.scaling_factor = scaling_factor
-        super().__init__(dim, max_position_embeddings, base, device)
-
-    def _set_cos_sin_cache(self, seq_len, device, dtype):
-        self.max_seq_len_cached = seq_len
-
-        start_idx_of_scaling = int(64*np.log(1024/np.pi)/np.log(self.base))
-        base_scalor_list = np.ones(self.dim//2)
-        base_scalor_list[:start_idx_of_scaling+1] = 1
-        for j in range(start_idx_of_scaling+1, self.dim//2):
-            base_scalor_list[j] = np.power(self.scaling_factor,self.dim/(2*j))
-        # base_scalor_list[:] = self.scaling_factor
-
-        base = self.base * base_scalor_list
-
-        inv_freq = 1.0 / (np.power(base, np.arange(0, self.dim, 2) / self.dim))
-        inv_freq = torch.tensor(inv_freq, device=device, dtype=torch.float64)
-        self.register_buffer("inv_freq", inv_freq, persistent=False)
-
-        t = np.arange(self.max_seq_len_cached, dtype=np.float64)
-        t = torch.tensor(t, device=self.inv_freq.device, dtype=torch.float64)
-
-        # freqs = torch.einsum("i,j->ij", t, self.inv_freq)
-        freqs = torch.outer(t, self.inv_freq.to(device=t.device).to(t.dtype))
-        # Different from paper, but it uses a different permutation in order to obtain the same calculation
-        emb = torch.cat((freqs, freqs), dim=-1)
-        self.register_buffer("cos_cached", emb.cos()[None, None, :, :].to(dtype), persistent=False)
-        self.register_buffer("sin_cached", emb.sin()[None, None, :, :].to(dtype), persistent=False)
-
 class LlamaVanillaNTKScalingRotaryEmbedding(LlamaRotaryEmbedding):
 
     def __init__(self, dim, max_position_embeddings=2048, base=10000, device=None, scaling_factor=1.0):
@@ -432,10 +400,6 @@ class LlamaAttention(nn.Module):
             scaling_factor = self.config.rope_scaling["factor"]
             if scaling_type == "linear":
                 self.rotary_emb = LlamaLinearScalingRotaryEmbedding(
-                    self.head_dim, max_position_embeddings=self.max_position_embeddings, scaling_factor=scaling_factor
-                )
-            elif scaling_type == "smart_linear":
-                self.rotary_emb = LlamaSmartLinearScalingRotaryEmbedding(
                     self.head_dim, max_position_embeddings=self.max_position_embeddings, scaling_factor=scaling_factor
                 )
             elif scaling_type == "dynamic":

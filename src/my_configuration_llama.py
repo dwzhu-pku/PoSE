@@ -171,7 +171,7 @@ class LlamaConfig(PretrainedConfig):
         rope_scaling_factor = self.rope_scaling.get("factor", None)
         if rope_scaling_type is None or rope_scaling_type not in ["linear", "dynamic", "vanilla_ntk", "yarn"]:
             raise ValueError(
-                f"`rope_scaling`'s name field must be one of ['linear', 'smart_linear', 'dynamic', 'vanilla_ntk', 'yarn'], got {rope_scaling_type}"
+                f"`rope_scaling`'s name field must be one of ['linear', 'dynamic', 'vanilla_ntk', 'yarn'], got {rope_scaling_type}"
             )
         if rope_scaling_factor is None or not isinstance(rope_scaling_factor, float) or rope_scaling_factor <= 1.0:
             raise ValueError(f"`rope_scaling`'s factor field must be an float > 1, got {rope_scaling_factor}")

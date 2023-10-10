@@ -12,9 +12,9 @@ Take context window extension from 2,048 to 4,096 as an example, we partition th
 Notably, by decoupling fine-tuning length from target context window, PoSE can theoretically extend the context window **infinitely**, constrained only by memory usage for inference. With ongoing advancements for efficient inference~(e.g., vLLM, Flash Attention), we believe PoSE holds great promise for scaling the context window even further.
 
 ## 🔥 What's New
-
-* **[2023/09/22]** Results of PoSE on Baichuan2 is included. We further consolidate the effectiveness of our method.
-* **[2023/09/19]** Our [paper](https://arxiv.org/abs/2309.10400) and code is released.
+* **[2023/10/10]** Updated our [paper](https://github.com/dwzhu-pku/PoSE/blob/master/paper/PoSE-v2.pdf) and code. Improved writing, added some discussion about chunk number and coverage possibility of relative positions in Appendix. Removed unused code and implemented a minor fix in `train_preprocess_function_pose` to make the coverage possiblity more uniform for large relative positions
+* **[2023/09/22]** Inclued results of PoSE on Baichuan2. We further consolidated the effectiveness of our method.
+* **[2023/09/19]** Our [paper](https://arxiv.org/abs/2309.10400) and code were released.
 
 ## 🔧 Reproduction
 To replicate our results, follow these steps to download the code and necessary dependencies:
