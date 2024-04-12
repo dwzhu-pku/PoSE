@@ -108,12 +108,10 @@ And it exhibits only minimal performance degradation on standard benchmarks:
 If you find this repo helpful, please cite our paper as follows:
 
 ```bibtex
-@misc{zhu2023pose,
-      title={PoSE: Efficient Context Window Extension of LLMs via Positional Skip-wise Training}, 
-      author={Dawei Zhu and Nan Yang and Liang Wang and Yifan Song and Wenhao Wu and Furu Wei and Sujian Li},
-      year={2023},
-      eprint={2309.10400},
-      archivePrefix={arXiv},
-      primaryClass={cs.CL}
+@article{zhu2023pose,
+  title={Pose: Efficient context window extension of llms via positional skip-wise training},
+  author={Zhu, Dawei and Yang, Nan and Wang, Liang and Song, Yifan and Wu, Wenhao and Wei, Furu and Li, Sujian},
+  journal={arXiv preprint arXiv:2309.10400},
+  year={2023}
 }
 ```
