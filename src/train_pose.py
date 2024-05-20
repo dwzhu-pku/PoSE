@@ -156,7 +156,7 @@ def train_preprocess_function_randomized(examples, tokenizer, scaled_max_positio
 def train_preprocess_function_pose(examples, tokenizer, scaled_max_position_embeddings, model_max_position_embeddings):
 
     inputs = examples["text"]
-    raw_model_inputs = tokenizer(inputs, padding=False, truncation=True, max_length=model_max_position_embeddings*5)
+    raw_model_inputs = tokenizer(inputs, padding=False, truncation=True, max_length=scaled_max_position_embeddings)
 
     input_ids = []
     position_ids = []
